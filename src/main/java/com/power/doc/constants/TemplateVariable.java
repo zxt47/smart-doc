@@ -36,7 +36,6 @@ public enum TemplateVariable {
     HOME_PAGE("homePage"),
     HTML("html"),
     TITLE("title"),
-    STYLE("style"),
     ERROR_LIST_TITLE("errorListTitle"),
     CREATE_TIME("createTime"),
     PROJECT_NAME("projectName"),

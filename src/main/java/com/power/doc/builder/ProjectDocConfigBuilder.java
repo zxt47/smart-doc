@@ -26,7 +26,6 @@ import com.power.common.constants.Charset;
 import com.power.common.util.CollectionUtil;
 import com.power.common.util.StringUtil;
 import com.power.doc.constants.DocGlobalConstants;
-import com.power.doc.constants.HighlightStyle;
 import com.power.doc.model.*;
 import com.power.doc.utils.JavaClassUtil;
 import com.thoughtworks.qdox.JavaProjectBuilder;
@@ -72,7 +71,6 @@ public class ProjectDocConfigBuilder {
         } else {
             this.serverUrl = apiConfig.getServerUrl();
         }
-        this.setHighlightStyle();
         javaProjectBuilder.setEncoding(Charset.DEFAULT_CHARSET);
         this.javaProjectBuilder = javaProjectBuilder;
         this.loadJavaSource(apiConfig.getSourceCodePaths(), this.javaProjectBuilder);
@@ -166,29 +164,9 @@ public class ProjectDocConfigBuilder {
         if (Objects.nonNull(responseBodyAdvice) && StringUtil.isNotEmpty(responseBodyAdvice.getClassName())) {
             try {
                 Class.forName(responseBodyAdvice.getClassName());
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException("Can't find class " + responseBodyAdvice.getClassName() + " for ResponseBodyAdvice.");
+            }catch (ClassNotFoundException e){
+                throw new RuntimeException("Can't find class "+responseBodyAdvice.getClassName()+" for ResponseBodyAdvice.");
             }
-        }
-    }
-
-    /**
-     * 设置高亮样式
-     */
-    private void setHighlightStyle() {
-        String style = apiConfig.getStyle();
-        if (HighlightStyle.containStyle(style)) {
-            return;
-        }
-        Random random = new Random();
-        if ("randomLight".equals(style)) {
-            apiConfig.setStyle(HighlightStyle.randomLight(random));
-        } else if ("randomDark".equals(style)) {
-            apiConfig.setStyle(HighlightStyle.randomDark(random));
-        } else if ("random".equals(style)) {
-            apiConfig.setStyle(HighlightStyle.randomAll(random));
-        } else {
-            apiConfig.setStyle(HighlightStyle.DEFAULT_STYLE);
         }
     }
 
